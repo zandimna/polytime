@@ -1,4 +1,4 @@
-zandimna-polytime
+<h1>zandimna-polytime</h1>
 
 Usage:
 <code>python polytime <interval name 1> <starting time 1> [interval name 2] [starting time 2] ...</code>
@@ -12,6 +12,7 @@ Wake time 1 is 04:50 local time, which is 19:50 UTC, which is 19\*60+50=1190 min
 midnight UTC.
 <br>
 Wake time 2 is 08:40 LT, 23:40 UTC, 1420 minutes past midnight UTC
+<br>
 The period following wake time 1 is Alpha and the period following wake time 2 is Beta
 <br>
 The example command will be:
