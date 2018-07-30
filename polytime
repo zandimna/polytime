@@ -1,0 +1,42 @@
+import sys, getopt, time, datetime, calendar
+
+#section 1 polytime
+#get time now
+minutes = int(time.time()%86400/60)
+now = datetime.datetime.utcnow()
+print("It is now " + str(minutes) + " minutes since midnight UTC")
+
+#wake config
+wakeconf = []
+
+for i in range(1, len(sys.argv), 2):
+	dict = {'name': sys.argv[i], 'time': int(sys.argv[i+1])}
+	wakeconf.append(dict)
+
+wakeconf.sort(key=lambda k: k['time'])
+
+#get polytime
+polytime = 0
+gapname = ''
+dayarcseq = 0
+
+if minutes < wakeconf[0]['time']:
+	polytime = 1440 + minutes - wakeconf[-1]['time']
+for i in range(1,len(wakeconf)):
+	if minutes >= wakeconf[i]['time']:
+		polytime = minutes - wakeconf[i]['time']
+		gapname = wakeconf[i]['name']
+		dayarcseq = i
+
+polytimeout = str(int(polytime/60)) + ':' + str(polytime%60) + ' ' + gapname	
+
+#section 2 polydate
+#timestamp of month's day 1
+monthfirstday = now.replace(day=1,hour=0,minute=0,second=0,microsecond=0)
+timestamp = calendar.timegm(monthfirstday.timetuple())
+#number of arcs since midnight that day
+arcsequence = int(int(time.time() - timestamp)/86400*len(wakeconf)) + dayarcseq
+month = now.strftime('%Y-%m-')
+
+
+print(month + str(arcsequence) + ' ' + polytimeout)
