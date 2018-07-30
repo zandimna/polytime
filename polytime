@@ -22,6 +22,8 @@ dayarcseq = 0
 
 if minutes < wakeconf[0]['time']:
 	polytime = 1440 + minutes - wakeconf[-1]['time']
+	gapname = wakeconf[-1]['name']
+	dayarcseq = len(wakeconf)-1
 for i in range(0,len(wakeconf)):
 	if minutes >= wakeconf[i]['time']:
 		polytime = minutes - wakeconf[i]['time']
