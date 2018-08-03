@@ -19,22 +19,14 @@ wakeconf.sort(key=lambda k: k['time'])
 #get polytime
 polytime = 0
 gapname = ''
-dayarcseq = 0
 
 if minutes < wakeconf[0]['time']:
 	polytime = 1440 + minutes - wakeconf[-1]['time']
 	gapname = wakeconf[-1]['name']
-	dayarcseq = len(wakeconf)-1
 
-
-for i in range(0,len(wakeconf)):
-	if minutes >= wakeconf[i]['time']:
-		polytime = minutes - wakeconf[i]['time']
-		gapname = wakeconf[i]['name']
-		dayarcseq = i
 	
 if int(polytime/60) == 0:
-	polytimeout = str(polytime).zfill(2) + ' ' + gapname
+	polytimeout = str(polytime) + ' ' + gapname
 else:
 	polytimeout = str(int(polytime/60)) + ':' + str(polytime%60).zfill(2) + ' ' + gapname
 
@@ -42,9 +34,17 @@ else:
 #timestamp of month's day 1
 monthfirstday = now.replace(day=1,hour=0,minute=0,second=0,microsecond=0)
 timestamp = calendar.timegm(monthfirstday.timetuple())
+
 #number of arcs since midnight that day
-arcsequence = int(int(time.time() - timestamp)/86400*len(wakeconf)) + dayarcseq
+for i in range(0,len(wakeconf)*32):
+	if int(time.time()) >= timestamp + wakeconf[i%len(wakeconf)]['time']*60:
+		timestamp +=  wakeconf[i%len(wakeconf)]['time']*60
+		arcseq=i+1
+	else:
+		break
+
 #month = now.strftime('%Y-%m-')
 
 
-print("Arc " + str(arcsequence).zfill(2) + ', ' + polytimeout)
+print("Arc " + str(arcseq).zfill(2) + ', ' + polytimeout)
+
