@@ -16,6 +16,6 @@ Wake time 2 is 08:40 LT, 23:40 UTC, 1420 minutes past midnight UTC
 The period following wake time 1 is Alpha and the period following wake time 2 is Beta
 <br>
 The example command will be:
-<code>python polytime Alpha 1190 Beta 1420</code>
+<code>./polytime Alpha 1190 Beta 1420</code>
 <br>
 The numbers following names does not have to be in ascending order
